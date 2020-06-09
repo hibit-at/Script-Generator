@@ -1,10 +1,9 @@
 import json
 import pprint
 import csv
-import cmath
 import math
+import cmath
 import copy
-import os
 
 json_open = open('./sample.json', 'r')
 j = json.load(json_open)
@@ -38,13 +37,14 @@ for i,p in enumerate(points):
     j["Movements"][i-1]["EndPos"]["y"] = y
     j["Movements"][i-1]["EndPos"]["z"] = z
     y -= 1.5
-    c = complex(x,z)
-    rad = cmath.phase(c)
+    rad = math.atan2(x,z)
     deg = 270 - math.degrees(rad)
+    if x == 0 and y == 0:
+        deg = 0
     j["Movements"][i]["StartRot"]["y"] = deg 
     j["Movements"][i-1]["EndRot"]["y"] = deg 
-    c2 = complex(abs(c),y)
-    rad2 = cmath.phase(c2)
+    d = math.sqrt(x*x + z*z)
+    rad2 = math.atan2(y,d)
     deg2 = math.degrees(rad2)
     j["Movements"][i]["StartRot"]["x"] = deg2 
     j["Movements"][i-1]["EndRot"]["x"] = deg2

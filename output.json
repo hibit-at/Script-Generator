@@ -1,0 +1,105 @@
+{
+    "ActiveInPauseMenu": true,
+    "Movements": [
+        {
+            "StartPos": {
+                "x": 1.0,
+                "y": 2.0,
+                "z": 0.0
+            },
+            "StartRot": {
+                "x": 26.56505117707799,
+                "y": 270.0,
+                "z": 0
+            },
+            "EndPos": {
+                "x": 0.0,
+                "y": 2.0,
+                "z": 1.0
+            },
+            "EndRot": {
+                "x": 26.56505117707799,
+                "y": 180.0,
+                "z": 0
+            },
+            "Duration": 4.0,
+            "Delay": 0,
+            "EaseTransition": true
+        },
+        {
+            "StartPos": {
+                "x": 0.0,
+                "y": 2.0,
+                "z": 1.0
+            },
+            "StartRot": {
+                "x": 26.56505117707799,
+                "y": 180.0,
+                "z": 0
+            },
+            "EndPos": {
+                "x": -1.0,
+                "y": 2.0,
+                "z": 0.0
+            },
+            "EndRot": {
+                "x": 26.56505117707799,
+                "y": 90.0,
+                "z": 0
+            },
+            "Duration": 4.0,
+            "Delay": 0,
+            "EaseTransition": true
+        },
+        {
+            "StartPos": {
+                "x": -1.0,
+                "y": 2.0,
+                "z": 0.0
+            },
+            "StartRot": {
+                "x": 26.56505117707799,
+                "y": 90.0,
+                "z": 0
+            },
+            "EndPos": {
+                "x": 0.0,
+                "y": 2.0,
+                "z": -1.0
+            },
+            "EndRot": {
+                "x": 26.56505117707799,
+                "y": 360.0,
+                "z": 0
+            },
+            "Duration": 4.0,
+            "Delay": 0,
+            "EaseTransition": true
+        },
+        {
+            "StartPos": {
+                "x": 0.0,
+                "y": 2.0,
+                "z": -1.0
+            },
+            "StartRot": {
+                "x": 26.56505117707799,
+                "y": 360.0,
+                "z": 0
+            },
+            "EndPos": {
+                "x": 1.0,
+                "y": 2.0,
+                "z": 0.0
+            },
+            "EndRot": {
+                "x": 26.56505117707799,
+                "y": 270.0,
+                "z": 0
+            },
+            "Duration": 4.0,
+            "Delay": 0,
+            "EaseTransition": true
+        }
+    ]
+}

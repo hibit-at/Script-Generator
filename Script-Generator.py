@@ -38,16 +38,14 @@ for i,p in enumerate(points):
     j["Movements"][i-1]["EndPos"]["y"] = y
     j["Movements"][i-1]["EndPos"]["z"] = z
     y -= 1.5
-    c = complex(-x,-z)
+    c = complex(x,z)
     rad = cmath.phase(c)
-    deg = -math.degrees(rad)+90
-    #print(deg)
+    deg = 270 - math.degrees(rad)
     j["Movements"][i]["StartRot"]["y"] = deg 
     j["Movements"][i-1]["EndRot"]["y"] = deg 
     c2 = complex(abs(c),y)
     rad2 = cmath.phase(c2)
     deg2 = math.degrees(rad2)
-    #print(-deg2)
     j["Movements"][i]["StartRot"]["x"] = deg2 
     j["Movements"][i-1]["EndRot"]["x"] = deg2
 

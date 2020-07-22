@@ -1,14 +1,15 @@
 import json
 import pprint
 import csv
-import math
 import cmath
+import math
 import copy
+import os
 
-json_open = open('./sample.json', 'r')
+json_open = open('./template.json', 'r')
 j = json.load(json_open)
 
-print("sample.jsonを読み込みました")
+print("template.jsonを読み込みました")
 
 csv_file = open("./input.csv", "r",encoding="utf-8-sig")
 c = csv.DictReader(csv_file)
@@ -20,34 +21,74 @@ for row in c:
 
 n = len(points)
 
+bpm = points[0]["marker"]
+
 for i in range(n-1):
     new_j = copy.deepcopy(j["Movements"][0])
     j["Movements"].append(new_j)
 
 for i,p in enumerate(points):
-    x = float(p['X'])
-    y = float(p['Y'])
-    z = float(p['Z'])
+    #パラメータ抽出
+    sX = float(p['sX'])
+    sY = float(p['sY'])
+    sZ = float(p['sZ'])
+    sRZ = float(p['sRZ'])
+    eX = float(p['eX'])
+    eY = float(p['eY'])
+    eZ = float(p['eZ'])
+    eRZ = float(p['sRZ'])
+    Ease = int(p['Ease'])
+    offX = float(p['offX'])
+    offY = float(p['offY'])
     duration = float(p['Duration'])
-    j["Movements"][i]["Duration"] = duration
-    j["Movements"][i]["StartPos"]["x"] = x
-    j["Movements"][i]["StartPos"]["y"] = y
-    j["Movements"][i]["StartPos"]["z"] = z
-    j["Movements"][i-1]["EndPos"]["x"] = x
-    j["Movements"][i-1]["EndPos"]["y"] = y
-    j["Movements"][i-1]["EndPos"]["z"] = z
-    y -= 1.5
-    rad = math.atan2(x,z)
-    deg = 270 - math.degrees(rad)
-    if x == 0 and y == 0:
-        deg = 0
+
+    #位置のセット
+    j["Movements"][i]["Duration"] = duration*60/float(bpm)
+    j["Movements"][i]["StartPos"]["x"] = sX
+    j["Movements"][i]["StartPos"]["y"] = sY
+    j["Movements"][i]["StartPos"]["z"] = sZ
+    j["Movements"][i]["EndPos"]["x"] = eX
+    j["Movements"][i]["EndPos"]["y"] = eY
+    j["Movements"][i]["EndPos"]["z"] = eZ
+
+    sX += offX
+    eX += offX
+    sY -= (1.5 + offY)
+    eY -= (1.5 + offY)
+
+    #角度の計算1
+    c = complex(-sX,-sZ)
+    rad = cmath.phase(c)
+    deg = -math.degrees(rad)+90
     j["Movements"][i]["StartRot"]["y"] = deg 
-    j["Movements"][i-1]["EndRot"]["y"] = deg 
-    d = math.sqrt(x*x + z*z)
-    rad2 = math.atan2(y,d)
+    print(deg)
+    
+    c = complex(-eX,-eZ)
+    rad = cmath.phase(c)
+    deg = -math.degrees(rad)+90
+    j["Movements"][i]["EndRot"]["y"] = deg
+
+    #角度の計算2 
+    c2 = complex(abs(c),sY)
+    rad2 = cmath.phase(c2)
     deg2 = math.degrees(rad2)
-    j["Movements"][i]["StartRot"]["x"] = deg2 
-    j["Movements"][i-1]["EndRot"]["x"] = deg2
+    j["Movements"][i]["StartRot"]["x"] = deg2
+
+    c2 = complex(abs(c),eY)
+    rad2 = cmath.phase(c2)
+    deg2 = math.degrees(rad2)
+    print(-deg2)
+    j["Movements"][i]["EndRot"]["x"] = deg2
+
+    #Easeの判定
+    if Ease == 1:
+        j["Movements"][i]["EaseTransition"] = "true"
+    else:
+        j["Movements"][i]["EaseTransition"] = "false"
+
+    #z軸回りの角度
+    j["Movements"][i]["StartRot"]["z"] = sRZ
+    j["Movements"][i]["EndRot"]["z"] = eRZ
 
 pprint.pprint(j)
 

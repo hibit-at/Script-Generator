@@ -36,10 +36,12 @@ for i,p in enumerate(points):
     eX = float(p['eX'])
     eY = float(p['eY'])
     eZ = float(p['eZ'])
-    eRZ = float(p['sRZ'])
+    eRZ = float(p['eRZ'])
     Ease = int(p['Ease'])
-    offX = float(p['offX'])
-    offY = float(p['offY'])
+    sOffX = float(p['sOffX'])
+    sOffY = float(p['sOffY'])
+    eOffX = float(p['eOffX'])
+    eOffY = float(p['eOffY'])
     duration = float(p['Duration'])
 
     #位置のセット
@@ -51,21 +53,25 @@ for i,p in enumerate(points):
     j["Movements"][i]["EndPos"]["y"] = eY
     j["Movements"][i]["EndPos"]["z"] = eZ
 
-    sX += offX
-    eX += offX
-    sY -= (1.5 + offY)
-    eY -= (1.5 + offY)
+    sX -= sOffX
+    eX -= eOffX
+    sY -= (1.5 + sOffY)
+    eY -= (1.5 + eOffY)
 
     #角度の計算1
     c = complex(-sX,-sZ)
     rad = cmath.phase(c)
     deg = -math.degrees(rad)+90
+    if sX == 0 and sZ == 0:
+        deg = 0
     j["Movements"][i]["StartRot"]["y"] = deg 
     print(deg)
     
     c = complex(-eX,-eZ)
     rad = cmath.phase(c)
     deg = -math.degrees(rad)+90
+    if eX == 0 and eZ == 0:
+        deg = 0
     j["Movements"][i]["EndRot"]["y"] = deg
 
     #角度の計算2 
